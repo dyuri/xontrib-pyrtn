@@ -20,16 +20,25 @@ xpip install xontrib-pyrtn
 
 ```bash
 xontrib load xontrib_pyrtn
-# TODO: what's next?
 ```
 
-## Examples
+The xontrib adds two functions to the global namespace - `In()` and `Out()`. They are similar to `ipython`'s `In[]` and `Out[]`. (I'm using functions instead of lists to protect the *history* from accidental modifications.)
 
-...
+A new `PROMPT_FIELD` `pyhistnum` is also added, to be able to include the number of the upcoming command (like in `ipython`).
 
-## Known issues
+## Example
 
-...
+```bash
+$ xontrib load pyrtn
+$ $PROMPT = "[{pyhistnum}]$ "
+[2]$ [12 * 3 + 6]
+[42]
+[3]$ In(2)
+"[12 * 3 + 6]\n"
+[4]$ Out(2) + [1]
+[42, 1]
+[5]$ 
+```
 
 ## Credits
 
