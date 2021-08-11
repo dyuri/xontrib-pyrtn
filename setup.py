@@ -9,7 +9,7 @@ except (IOError, OSError):
 
 setuptools.setup(
     name='xontrib-pyrtn',
-    version='0.1.0',
+    version='0.2.0',
     license='MIT',
     author='Gyuri Horák',
     author_email='dyuri@horak.hu',

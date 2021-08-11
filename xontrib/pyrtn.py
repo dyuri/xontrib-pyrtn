@@ -8,24 +8,32 @@ PYRTNS = []
 
 @events.on_postcommand
 def store_pyrtn(cmd, rtn, out, ts):
+    retval = _ if "_" in __builtins__ else None
     PYRTNS.append(
         (
             cmd,
-            _ if _ is not PYRTNS else None,
+            retval,
         )
     )
 
 
-def In(n=None):
-    if n is not None:
-        return PYRTNS[n][0]
-    return list(map(lambda pyrtn: pyrtn[0], PYRTNS))
+class PyrtnAccessor:
+
+    def __init__(self, idx, pyhistory=PYRTNS):
+        self.__idx = idx
+        self.__history = pyhistory
+
+    def __call__(self, histidx=None):
+        if histidx is not None:
+            return self.__history[histidx][self.__idx]
+        return list(map(lambda pyrtn: pyrtn[self.__idx], self.__history))
+
+    def __getitem__(self, idx=None):
+        return self(idx)
 
 
-def Out(n=None):
-    if n is not None:
-        return PYRTNS[n][1]
-    return list(map(lambda pyrtn: pyrtn[1], PYRTNS))
+In = PyrtnAccessor(0)
+Out = PyrtnAccessor(1)
 
 
 __xonsh__.env["PROMPT_FIELDS"]["pyhistnum"] = lambda: len(PYRTNS)
